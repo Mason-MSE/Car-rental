@@ -1,0 +1,572 @@
+-- MySQL dump 10.13  Distrib 8.0.44, for Linux (aarch64)
+--
+-- Host: localhost    Database: rental
+-- ------------------------------------------------------
+-- Server version	8.0.44
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `booking`
+--
+
+DROP TABLE IF EXISTS `booking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `booking` (
+  `booking_id` int NOT NULL AUTO_INCREMENT COMMENT 'Booking primary key',
+  `user_id` int DEFAULT NULL COMMENT 'FK to user.id',
+  `car_id` int DEFAULT NULL COMMENT 'FK to car.car_id',
+  `start_date` datetime DEFAULT NULL COMMENT 'Rental start date',
+  `end_date` datetime DEFAULT NULL COMMENT 'Rental end date',
+  `pickup_location` int DEFAULT NULL COMMENT 'Pickup location',
+  `drop_location` int DEFAULT NULL COMMENT 'Drop-off location',
+  `status` int DEFAULT NULL COMMENT 'Booking status 0:pending -1:Rejected 1:Approval,2 Return 3 Paying 4 Finish',
+  `notes` text COMMENT 'Additional notes',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last modification time',
+  `is_deleted` tinyint DEFAULT '0' COMMENT 'Soft delete flag',
+  `pickup_time` datetime DEFAULT NULL,
+  `drop_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`booking_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Booking table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `booking`
+--
+
+LOCK TABLES `booking` WRITE;
+/*!40000 ALTER TABLE `booking` DISABLE KEYS */;
+INSERT INTO `booking` VALUES (1,10,1,'2026-01-26 03:11:17','2026-01-27 03:11:17',3,4,3,'string','2026-01-26 16:24:35','2026-01-27 18:35:10',0,NULL,'2026-01-27 18:18:07'),(2,10,2,'2026-01-28 05:43:58','2026-03-29 05:43:58',2,6,0,'string','2026-01-28 18:50:20','2026-01-28 18:56:59',0,NULL,NULL),(3,10,2,'2026-01-28 05:43:58','2026-01-29 05:43:58',2,6,0,'string','2026-01-28 18:50:55','2026-01-28 18:50:55',0,NULL,NULL),(4,10,2,'2026-01-28 05:43:58','2026-01-29 05:43:58',2,6,0,'string','2026-01-28 18:51:56','2026-01-28 18:51:56',0,NULL,NULL),(5,10,2,'2026-01-28 05:43:58','2026-01-29 05:43:58',2,6,0,'string','2026-01-28 18:52:47','2026-01-28 18:52:47',0,NULL,NULL),(6,10,2,'2026-01-28 05:43:58','2026-01-29 05:43:58',2,6,0,'string','2026-01-28 18:53:50','2026-01-28 18:53:50',0,NULL,NULL),(7,10,2,'2026-01-28 05:43:58','2026-01-29 05:43:58',2,6,0,'string','2026-01-28 18:54:35','2026-01-28 18:54:35',0,NULL,NULL),(8,10,2,'2026-01-28 05:43:58','2026-01-29 05:43:58',2,6,0,'string','2026-01-28 18:55:09','2026-01-28 18:55:09',0,NULL,NULL),(9,10,2,'2026-01-28 05:43:58','2026-01-29 05:43:58',2,6,0,'string','2026-01-28 18:56:04','2026-01-28 18:56:04',0,NULL,NULL),(10,10,3,'2026-01-28 22:44:04','2026-02-28 22:44:04',3,1,0,'string','2026-01-29 11:55:24','2026-01-29 11:55:24',0,NULL,NULL),(11,10,3,'2026-01-28 22:44:04','2026-02-28 22:44:04',3,1,0,'string','2026-01-29 11:57:19','2026-01-29 11:57:19',0,NULL,NULL),(12,10,3,'2026-01-28 22:44:04','2026-02-28 22:44:04',3,1,0,'string','2026-01-29 11:58:26','2026-01-29 11:58:26',0,NULL,NULL),(13,10,3,'2026-01-28 22:44:04','2026-02-28 22:44:04',3,1,0,'string','2026-01-29 11:59:15','2026-01-29 11:59:15',0,NULL,NULL),(14,10,3,'2026-01-28 22:44:04','2026-02-28 22:44:04',3,1,0,'string','2026-01-29 12:00:48','2026-01-29 12:00:48',0,NULL,NULL),(15,10,3,'2026-01-28 22:44:04','2026-02-28 22:44:04',3,1,0,'string','2026-01-29 12:01:08','2026-01-29 12:01:08',0,NULL,NULL),(16,10,3,'2026-01-28 23:01:31','2026-03-28 23:01:31',1,4,0,'string','2026-01-29 12:01:43','2026-01-29 12:01:43',0,NULL,NULL),(17,10,3,'2026-01-28 23:01:31','2026-03-28 23:01:31',1,4,0,'string','2026-01-29 12:02:46','2026-01-29 12:02:46',0,NULL,NULL),(18,10,3,'2026-01-28 23:01:31','2026-03-28 23:01:31',1,4,0,'string','2026-01-29 12:03:44','2026-01-29 12:03:44',0,NULL,NULL);
+/*!40000 ALTER TABLE `booking` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `car`
+--
+
+DROP TABLE IF EXISTS `car`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `car` (
+  `car_id` int NOT NULL AUTO_INCREMENT COMMENT 'Car primary key',
+  `make` varchar(50) DEFAULT NULL COMMENT 'Car make',
+  `model` varchar(50) DEFAULT NULL COMMENT 'Car model',
+  `year` int DEFAULT NULL COMMENT 'Year of manufacture',
+  `mileage` int DEFAULT NULL COMMENT 'Mileage',
+  `is_available` tinyint(1) DEFAULT NULL COMMENT 'Availability status',
+  `min_days` int DEFAULT NULL COMMENT 'Minimum rental days',
+  `max_days` int DEFAULT NULL COMMENT 'Maximum rental days',
+  `license_plate` varchar(20) DEFAULT NULL COMMENT 'License plate',
+  `color` varchar(20) DEFAULT NULL COMMENT 'Car color',
+  `daily_rate` decimal(10,2) DEFAULT NULL COMMENT 'Daily rental rate',
+  `category_id` int DEFAULT NULL COMMENT 'FK to car_category.id',
+  `location_id` int DEFAULT NULL COMMENT 'FK to location.id',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last modification time',
+  `is_deleted` tinyint DEFAULT '0' COMMENT 'Soft delete flag',
+  PRIMARY KEY (`car_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Car table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `car`
+--
+
+LOCK TABLES `car` WRITE;
+/*!40000 ALTER TABLE `car` DISABLE KEYS */;
+INSERT INTO `car` VALUES (1,'Toyota','Camry',2024,10000,1,1,30,'ABC-1234','Silver',79.99,2,4,'2026-01-25 23:13:25','2026-01-27 18:18:07',0),(2,'Honda','Civic',2021,12000,1,1,25,'XYZ-5678','Black',69.99,2,2,'2026-01-25 23:15:00','2026-01-26 06:31:57',0),(3,'Ford','Mustang',2023,5000,1,2,20,'MUS-2023','Red',120.00,3,1,'2026-01-25 23:16:00','2026-01-26 06:31:57',0),(4,'BMW','X5',2022,10000,1,3,15,'BMW-450','White',150.50,3,3,'2026-01-25 23:17:00','2026-01-26 06:31:57',0),(5,'Tesla','Model 3',2023,3000,1,1,30,'TES-303','Blue',130.00,4,2,'2026-01-25 23:18:00','2026-01-26 06:31:57',0),(6,'Chevrolet','Malibu',2021,18000,1,2,20,'CHE-6789','Gray',75.00,2,3,'2026-01-25 23:19:00','2026-01-26 06:31:57',0);
+/*!40000 ALTER TABLE `car` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `car_category`
+--
+
+DROP TABLE IF EXISTS `car_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `car_category` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Car category primary key',
+  `category_name` varchar(50) DEFAULT NULL COMMENT 'Category name',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last modification time',
+  `is_deleted` tinyint DEFAULT '0' COMMENT 'Soft delete flag',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Car category table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `car_category`
+--
+
+LOCK TABLES `car_category` WRITE;
+/*!40000 ALTER TABLE `car_category` DISABLE KEYS */;
+INSERT INTO `car_category` VALUES (1,'Economy','2026-01-25 23:24:57','2026-01-25 23:24:57',0),(2,'Compact','2026-01-25 23:25:10','2026-01-25 23:25:10',0),(3,'Midsize','2026-01-25 23:25:20','2026-01-25 23:25:20',0),(4,'Fullsize','2026-01-25 23:25:30','2026-01-25 23:25:30',0),(5,'Luxury','2026-01-25 23:25:40','2026-01-25 23:25:40',0),(6,'SUV','2026-01-25 23:25:51','2026-01-25 23:25:51',0),(7,'Crossover','2026-01-25 23:26:01','2026-01-25 23:26:01',0),(8,'Pickup','2026-01-25 23:26:11','2026-01-25 23:26:11',0),(9,'Van','2026-01-25 23:26:21','2026-01-25 23:26:21',0),(10,'Electric','2026-01-25 23:26:31','2026-01-25 23:26:31',0);
+/*!40000 ALTER TABLE `car_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `driver_license`
+--
+
+DROP TABLE IF EXISTS `driver_license`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `driver_license` (
+  `driver_license_id` int NOT NULL AUTO_INCREMENT COMMENT 'Driver license primary key',
+  `user_id` int DEFAULT NULL COMMENT 'FK to user.id',
+  `license_pic` varchar(255) DEFAULT NULL COMMENT 'Driver license image URL',
+  `expire_date` date DEFAULT NULL COMMENT 'License expiry date',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last modification time',
+  `is_deleted` tinyint DEFAULT '0' COMMENT 'Soft delete flag',
+  `drive_number` varchar(50) DEFAULT NULL COMMENT 'Additional driving license number',
+  `is_verified` tinyint DEFAULT '0',
+  PRIMARY KEY (`driver_license_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Driver license table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `driver_license`
+--
+
+LOCK TABLES `driver_license` WRITE;
+/*!40000 ALTER TABLE `driver_license` DISABLE KEYS */;
+INSERT INTO `driver_license` VALUES (1,10,'http://www.licence.pic','2090-01-28','2026-01-28 18:34:38','2026-01-28 18:34:38',0,'DL0090223',0);
+/*!40000 ALTER TABLE `driver_license` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `insurance`
+--
+
+DROP TABLE IF EXISTS `insurance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `insurance` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `booking_id` bigint NOT NULL,
+  `insurance_type` int NOT NULL,
+  `policy_number` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provider` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `coverage_amount` decimal(12,2) NOT NULL,
+  `premium` decimal(10,2) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `status` int NOT NULL DEFAULT '1',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modify_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` int NOT NULL DEFAULT '0',
+  `insurance_price_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `policy_number` (`policy_number`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `insurance`
+--
+
+LOCK TABLES `insurance` WRITE;
+/*!40000 ALTER TABLE `insurance` DISABLE KEYS */;
+INSERT INTO `insurance` VALUES (1,4,2,2,'NZ-INS-2026-00089','AA Insurance New Zealand',50000.00,1299.99,'2026-02-01','2027-01-31',1,'2026-01-29 10:11:27','2026-01-29 10:11:27',0,0),(2,10,18,2,'CARRENT_20260129120344066','AA Insurance New Zealand',100000.00,2299.99,'2026-01-28','2026-03-28',1,'2026-01-29 12:03:44','2026-01-29 12:03:44',0,3);
+/*!40000 ALTER TABLE `insurance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `insurance_catalogue`
+--
+
+DROP TABLE IF EXISTS `insurance_catalogue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `insurance_catalogue` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Product code',
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Product name',
+  `description` text COLLATE utf8mb4_unicode_ci COMMENT 'Product description',
+  `company_id` bigint NOT NULL COMMENT 'Insurance company',
+  `insurance_type` int NOT NULL COMMENT '1=driver, 2=rental, 3=vehicle, 4=property',
+  `status` int NOT NULL DEFAULT '1' COMMENT '1=active, 0=inactive',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modify_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `insurance_catalogue`
+--
+
+LOCK TABLES `insurance_catalogue` WRITE;
+/*!40000 ALTER TABLE `insurance_catalogue` DISABLE KEYS */;
+INSERT INTO `insurance_catalogue` VALUES (1,'RENTAL_BASIC_30D','Rental Basic 30 Days','Basic rental car insurance covering collision and theft',1,2,1,'2026-01-29 11:14:00','2026-01-29 11:14:00',0),(2,'DRIVER_PROTECT_1YR','Driver Protection 1 Year','Driver insurance covering personal liability and accidents',2,1,1,'2026-01-29 11:14:00','2026-01-29 11:14:00',0),(3,'VEHICLE_COMPREHENSIVE','Vehicle Comprehensive','Full vehicle insurance including damage and natural disasters',3,3,1,'2026-01-29 11:14:00','2026-01-29 11:14:00',0),(4,'PROPERTY_BASIC','Property Basic','Basic property insurance covering fire and theft',4,4,1,'2026-01-29 11:14:00','2026-01-29 11:14:00',0),(5,'RENTAL_PREMIUM_60D','Rental Premium 60 Days','Extended rental insurance covering collision, theft, and roadside assistance',5,2,1,'2026-01-29 11:14:00','2026-01-29 11:14:00',0),(6,'DRIVER_ADVANCED_6M','Driver Advanced 6 Months','Advanced driver insurance with extended coverage for accidents and liability',6,1,1,'2026-01-29 11:14:00','2026-01-29 11:14:00',0),(7,'VEHICLE_COMBO','Vehicle Combo Insurance','Vehicle insurance bundled with roadside assistance and theft protection',7,3,1,'2026-01-29 11:14:00','2026-01-29 11:14:00',0),(8,'PROPERTY_PREMIUM','Property Premium Insurance','Comprehensive property insurance covering fire, theft, and natural disasters',8,4,1,'2026-01-29 11:14:00','2026-01-29 11:14:00',0),(9,'RENTAL_ECONOMY','Rental Economy Insurance','Basic short-term rental coverage for economy vehicles',9,2,1,'2026-01-29 11:14:00','2026-01-29 11:14:00',0),(10,'DRIVER_STANDARD','Driver Standard Insurance','Standard driver insurance covering accidents and liability',10,1,1,'2026-01-29 11:14:00','2026-01-29 11:14:00',0);
+/*!40000 ALTER TABLE `insurance_catalogue` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `insurance_company`
+--
+
+DROP TABLE IF EXISTS `insurance_company`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `insurance_company` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Insurance company name',
+  `contact_email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contact_phone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '1' COMMENT '1=active, 0=inactive',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modify_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `insurance_company`
+--
+
+LOCK TABLES `insurance_company` WRITE;
+/*!40000 ALTER TABLE `insurance_company` DISABLE KEYS */;
+INSERT INTO `insurance_company` VALUES (1,'AA Insurance New Zealand','info@aa.co.nz','+64 9 123 4567',1,'2026-01-29 10:51:30','2026-01-29 10:51:30',0),(2,'Southern Cross Insurance','support@southerncross.co.nz','+64 3 987 6543',1,'2026-01-29 10:52:12','2026-01-29 10:52:12',0),(3,'Blue Sky Insurance','contact@bluesky.co.nz','+64 3 101 2020',1,'2026-01-29 10:53:26','2026-01-29 10:53:26',0),(4,'Summit Insurance NZ','info@summitinsurance.co.nz','+64 9 999 0011',1,'2026-01-29 10:53:33','2026-01-29 10:53:33',0),(5,'KiwiSafe Insurance','support@kiwisafe.co.nz','+64 4 888 9900',1,'2026-01-29 10:53:40','2026-01-29 10:53:40',0),(6,'Aotearoa Insurance','contact@aotearoa.co.nz','+64 3 777 8899',1,'2026-01-29 10:53:46','2026-01-29 10:53:46',0),(7,'Everest Insurance NZ','info@everestinsurance.co.nz','+64 9 666 7788',1,'2026-01-29 10:53:52','2026-01-29 10:53:52',0),(8,'Harbour Insurance','support@harbour.co.nz','+64 4 555 6677',1,'2026-01-29 10:53:58','2026-01-29 10:53:58',0),(9,'Southern Shield Insurance','help@southernshield.co.nz','+64 3 444 5566',1,'2026-01-29 10:54:05','2026-01-29 10:54:05',0),(10,'Pacific Insurance','contact@pacificinsurance.co.nz','+64 4 333 4455',1,'2026-01-29 10:54:11','2026-01-29 10:54:11',0),(11,'KiwiCare Insurance','support@kiwicare.co.nz','+64 9 222 3344',1,'2026-01-29 10:54:16','2026-01-29 10:54:16',0),(12,'NZ Life & Health Insurance','info@nzlhi.co.nz','+64 9 111 2233',1,'2026-01-29 10:54:22','2026-01-29 10:54:22',0);
+/*!40000 ALTER TABLE `insurance_company` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `insurance_price`
+--
+
+DROP TABLE IF EXISTS `insurance_price`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `insurance_price` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `catalogue_id` bigint NOT NULL COMMENT 'Linked product',
+  `coverage_amount` decimal(12,2) NOT NULL COMMENT 'Coverage amount',
+  `premium` decimal(10,2) NOT NULL COMMENT 'Premium cost',
+  `duration_days` int NOT NULL COMMENT 'Policy duration in days',
+  `status` int NOT NULL DEFAULT '1' COMMENT '1=active, 0=inactive',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modify_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `insurance_price`
+--
+
+LOCK TABLES `insurance_price` WRITE;
+/*!40000 ALTER TABLE `insurance_price` DISABLE KEYS */;
+INSERT INTO `insurance_price` VALUES (1,1,50000.00,1299.99,30,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(2,1,75000.00,1799.99,30,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(3,1,100000.00,2299.99,30,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(4,2,25000.00,699.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(5,2,50000.00,1299.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(6,2,75000.00,1799.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(7,3,50000.00,1499.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(8,3,100000.00,2499.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(9,3,150000.00,3499.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(10,4,100000.00,1299.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(11,4,150000.00,1799.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(12,4,200000.00,2299.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(13,5,50000.00,1499.99,60,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(14,5,75000.00,1999.99,60,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(15,5,100000.00,2499.99,60,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(16,6,25000.00,799.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(17,6,50000.00,1299.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(18,6,75000.00,1799.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(19,7,50000.00,1499.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(20,7,100000.00,2499.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(21,7,150000.00,3499.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(22,8,100000.00,1299.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(23,8,150000.00,1799.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(24,8,200000.00,2299.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(25,9,20000.00,499.99,15,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(26,9,40000.00,899.99,15,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(27,9,60000.00,1299.99,15,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(28,10,25000.00,699.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(29,10,50000.00,1299.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(30,10,75000.00,1799.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(31,1,120000.00,2999.99,30,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(32,2,100000.00,2299.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(33,3,200000.00,4499.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(34,4,250000.00,2999.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(35,5,125000.00,2799.99,60,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(36,6,100000.00,2299.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(37,7,200000.00,4499.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(38,8,250000.00,2999.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(39,9,80000.00,1699.99,15,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(40,10,120000.00,2599.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(41,1,150000.00,3499.99,30,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(42,2,125000.00,2799.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(43,3,250000.00,4999.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(44,4,300000.00,3499.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(45,5,150000.00,3299.99,60,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(46,6,125000.00,2799.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(47,7,250000.00,4999.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(48,8,300000.00,3499.99,365,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(49,9,100000.00,1999.99,15,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0),(50,10,150000.00,3299.99,180,1,'2026-01-29 11:08:01','2026-01-29 11:08:01',0);
+/*!40000 ALTER TABLE `insurance_price` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `location`
+--
+
+DROP TABLE IF EXISTS `location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `location` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Location primary key',
+  `location_name` varchar(100) DEFAULT NULL COMMENT 'Location name',
+  `street` varchar(100) DEFAULT NULL COMMENT 'Street address',
+  `city` varchar(50) DEFAULT NULL COMMENT 'City',
+  `state` varchar(50) DEFAULT NULL COMMENT 'State',
+  `zipcode` varchar(20) DEFAULT NULL COMMENT 'Postal code',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last modification time',
+  `is_deleted` tinyint DEFAULT '0' COMMENT 'Soft delete flag',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Location table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `location`
+--
+
+LOCK TABLES `location` WRITE;
+/*!40000 ALTER TABLE `location` DISABLE KEYS */;
+INSERT INTO `location` VALUES (1,'Downtown Branch','123 Main St','Auckland','Auckland','1010','2026-01-25 23:20:00','2026-01-25 23:20:00',0),(2,'Airport Branch','456 Airport Rd','Auckland','Auckland','2020','2026-01-25 23:21:00','2026-01-25 23:21:00',0),(3,'North Shore Branch','789 Beach Rd','Auckland','Auckland','0620','2026-01-25 23:22:00','2026-01-25 23:22:00',0),(4,'Westfield Branch','101 Westfield Ave','Auckland','Auckland','0600','2026-01-25 23:23:00','2026-01-25 23:23:00',0),(5,'Botany Branch','202 Botany St','Auckland','Auckland','2013','2026-01-25 23:24:00','2026-01-25 23:24:00',0),(6,'Manukau Branch','303 Manukau Rd','Auckland','Auckland','2104','2026-01-25 23:25:00','2026-01-25 23:25:00',0),(7,'Albany Branch','404 Albany Hwy','Auckland','Auckland','0632','2026-01-25 23:26:00','2026-01-25 23:26:00',0),(8,'Remuera Branch','505 Remuera Rd','Auckland','Auckland','1050','2026-01-25 23:27:00','2026-01-25 23:27:00',0),(9,'Takapuna Branch','606 Takapuna Dr','Auckland','Auckland','0622','2026-01-25 23:28:00','2026-01-25 23:28:00',0),(10,'Papakura Branch','707 Papakura St','Auckland','Auckland','2110','2026-01-25 23:29:00','2026-01-25 23:29:00',0);
+/*!40000 ALTER TABLE `location` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `payment` (
+  `payment_id` int NOT NULL AUTO_INCREMENT COMMENT 'Payment primary key',
+  `booking_id` int DEFAULT NULL COMMENT 'FK to booking.booking_id',
+  `rent_fee_id` int DEFAULT NULL COMMENT 'FK to rent_fee.rent_fee_id',
+  `payment_amount` decimal(10,2) DEFAULT NULL COMMENT 'Amount paid',
+  `payment_date` datetime DEFAULT NULL COMMENT 'Payment date',
+  `payment_method` enum('credit_card','paypal','bank_transfer','cash','other') DEFAULT NULL COMMENT 'Payment method',
+  `payment_status` int DEFAULT NULL COMMENT 'Payment status code',
+  `reference_number` varchar(50) DEFAULT NULL COMMENT 'Reference number',
+  `payer_name` varchar(100) DEFAULT NULL COMMENT 'Payer name',
+  `notes` text COMMENT 'Additional notes',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last modification time',
+  `is_deleted` tinyint DEFAULT '0' COMMENT 'Soft delete flag',
+  PRIMARY KEY (`payment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Payment table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment`
+--
+
+LOCK TABLES `payment` WRITE;
+/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+INSERT INTO `payment` VALUES (1,1,1,2776.73,'2026-01-27 15:30:00','credit_card',1,'PAY-20260127-0001','John Smith','Full payment for booking #12','2026-01-27 18:35:10','2026-01-27 18:35:10',0);
+/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rent_fee`
+--
+
+DROP TABLE IF EXISTS `rent_fee`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rent_fee` (
+  `rent_fee_id` int NOT NULL AUTO_INCREMENT COMMENT 'Rent fee primary key',
+  `booking_id` int DEFAULT NULL COMMENT 'FK to booking.booking_id',
+  `base_amount` decimal(10,2) DEFAULT NULL COMMENT 'Base rental amount',
+  `insurance_amount` decimal(10,2) DEFAULT NULL COMMENT 'Insurance amount',
+  `late_fee` decimal(10,2) DEFAULT NULL COMMENT 'Late fee',
+  `discount_amount` decimal(10,2) DEFAULT NULL COMMENT 'Discount amount',
+  `tax_amount` decimal(10,2) DEFAULT NULL COMMENT 'Tax amount',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last modification time',
+  `is_deleted` tinyint DEFAULT '0' COMMENT 'Soft delete flag',
+  `total_amount` decimal(10,2) DEFAULT NULL COMMENT 'total amount',
+  PRIMARY KEY (`rent_fee_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Rent fee table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rent_fee`
+--
+
+LOCK TABLES `rent_fee` WRITE;
+/*!40000 ALTER TABLE `rent_fee` DISABLE KEYS */;
+INSERT INTO `rent_fee` VALUES (1,1,2639.67,10.00,50.37,0.00,26.40,'2026-01-26 19:53:31','2026-01-27 18:18:07',0,2776.73),(2,9,69.99,10.00,0.00,0.00,0.70,'2026-01-28 18:56:05','2026-01-28 18:56:05',0,80.69),(3,2,4199.40,10.00,0.00,0.00,41.99,'2026-01-28 18:56:59','2026-01-28 18:56:59',0,4251.39),(4,18,7080.00,10.00,0.00,0.00,70.80,'2026-01-29 12:03:44','2026-01-29 12:03:44',0,7160.80);
+/*!40000 ALTER TABLE `rent_fee` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `resource`
+--
+
+DROP TABLE IF EXISTS `resource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `resource` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Resource primary key',
+  `resource_name` varchar(100) DEFAULT NULL COMMENT 'Resource name',
+  `resource_link` varchar(255) DEFAULT NULL COMMENT 'Resource link',
+  `resource_method` varchar(10) DEFAULT NULL COMMENT 'HTTP method or action',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last modification time',
+  `is_deleted` tinyint DEFAULT '0' COMMENT 'Soft delete flag',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Resource table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `resource`
+--
+
+LOCK TABLES `resource` WRITE;
+/*!40000 ALTER TABLE `resource` DISABLE KEYS */;
+INSERT INTO `resource` VALUES (1,'Car:list','/car/','GET','2026-01-25 22:50:32','2026-01-25 22:53:05',0),(2,'Car:create','/car/','POST','2026-01-25 22:51:02','2026-01-25 22:53:05',0),(3,'Car:detail','/car/{card_id}','GET','2026-01-25 22:52:24','2026-01-25 22:52:24',0),(4,'Car:update','/car/{card_id}','PUT','2026-01-25 22:52:31','2026-01-25 22:52:31',0),(5,'Car:delete','/car/{card_id}','DELETE','2026-01-25 22:52:38','2026-01-25 22:52:38',0),(6,'Booking:put','/booking/approval/{booking_id}','PUT','2026-01-26 03:33:03','2026-01-26 03:33:03',0),(7,'insurance_company:create','/insurance_company/','POST','2026-01-26 03:33:03','2026-01-26 03:33:03',0),(8,'insurance_company:update','/insurance_company/{id}','PUT','2026-01-26 03:33:03','2026-01-26 03:33:03',0),(9,'insurance_company:delete','/insurance_company/{id}','DELETE','2026-01-26 03:33:03','2026-01-26 03:33:03',0),(10,'insurance_catalogue:create','/insurance_catalogue/','POST','2026-01-26 03:33:03','2026-01-26 03:33:03',0),(11,'insurance_catalogue:update','/insurance_catalogue/{id}','PUT','2026-01-26 03:33:03','2026-01-26 03:33:03',0),(12,'insurance_catalogue:delete','/insurance_catalogue/{id}','DELETE','2026-01-26 03:33:03','2026-01-26 03:33:03',0),(13,'insurance_price:create','/insurance_price/','POST','2026-01-26 03:33:03','2026-01-26 03:33:03',0),(14,'insurance_price:update','/insurance_price/{id}','PUT','2026-01-26 03:33:03','2026-01-26 03:33:03',0),(15,'insurance_price:delete','/insurance_price/{id}','DELETE','2026-01-26 03:33:03','2026-01-26 03:33:03',0),(16,'insurance_price:batch create','/insurance_price/batch_create','POST','2026-01-26 03:33:03','2026-01-26 03:33:03',0),(17,'insurance_catalogue :batch create','/insurance_catalogue/batch_create','POST','2026-01-26 03:33:03','2026-01-26 03:33:03',0);
+/*!40000 ALTER TABLE `resource` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `role`
+--
+
+DROP TABLE IF EXISTS `role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `role` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Role primary key',
+  `role_name` varchar(50) DEFAULT NULL COMMENT 'Role name',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last modification time',
+  `is_deleted` tinyint DEFAULT '0' COMMENT 'Soft delete flag',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Role table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role`
+--
+
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,'superAdmin','2026-01-26 11:37:26','2026-01-26 11:37:26',0),(2,'admin','2026-01-26 11:39:14','2026-01-26 11:39:14',0);
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `role_resource`
+--
+
+DROP TABLE IF EXISTS `role_resource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `role_resource` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+  `role_id` int DEFAULT NULL COMMENT 'FK to role.id',
+  `resource_id` int DEFAULT NULL COMMENT 'FK to resource.id',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last modification time',
+  `is_deleted` tinyint DEFAULT '0' COMMENT 'Soft delete flag',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Role-resource association table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role_resource`
+--
+
+LOCK TABLES `role_resource` WRITE;
+/*!40000 ALTER TABLE `role_resource` DISABLE KEYS */;
+INSERT INTO `role_resource` VALUES (1,1,2,'2026-01-25 22:54:54','2026-01-25 22:54:54',0),(2,1,4,'2026-01-25 22:54:54','2026-01-25 22:54:54',0),(3,1,5,'2026-01-25 22:54:54','2026-01-25 22:54:54',0),(4,1,6,'2026-01-25 22:54:54','2026-01-25 22:54:54',0),(5,1,7,'2026-01-28 21:50:54','2026-01-28 21:50:54',0),(6,1,8,'2026-01-28 21:50:54','2026-01-28 21:50:54',0),(7,1,9,'2026-01-28 21:50:54','2026-01-28 21:50:54',0),(8,1,10,'2026-01-28 21:50:54','2026-01-28 21:50:54',0),(9,1,11,'2026-01-28 21:50:54','2026-01-28 21:50:54',0),(10,1,12,'2026-01-28 21:50:54','2026-01-28 21:50:54',0),(11,1,13,'2026-01-28 21:50:54','2026-01-28 21:50:54',0),(12,1,14,'2026-01-28 21:50:54','2026-01-28 21:50:54',0),(13,1,15,'2026-01-28 21:50:54','2026-01-28 21:50:54',0),(14,1,16,'2026-01-28 22:07:47','2026-01-28 22:07:47',0),(15,1,17,'2026-01-28 22:13:55','2026-01-28 22:13:55',0);
+/*!40000 ALTER TABLE `role_resource` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'User primary key',
+  `full_name` varchar(100) DEFAULT NULL COMMENT 'Full name of the user',
+  `password` varchar(100) DEFAULT NULL COMMENT 'User password',
+  `email` varchar(100) DEFAULT NULL COMMENT 'User email',
+  `phone` varchar(20) DEFAULT NULL COMMENT 'User phone number',
+  `status` int DEFAULT NULL COMMENT 'Status of the user',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last modification time',
+  `is_deleted` tinyint DEFAULT '0' COMMENT 'Soft delete flag',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='User table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (4,'mason lee','$2b$12$sxEhENsx8vbsgmaKZaeZK.GSTR65sVYySIh4/785romOME3zloRX.','admin@gmail.com','4232159',1,'2026-01-25 20:09:22','2026-01-30 23:08:59',0),(10,'Jenny1','$2b$12$sxEhENsx8vbsgmaKZaeZK.GSTR65sVYySIh4/785romOME3zloRX.','Jenny@gmail.com','90888929334',1,'2026-01-26 10:29:10','2026-01-30 23:08:46',0),(12,'Lucy','$2b$12$sxEhENsx8vbsgmaKZaeZK.GSTR65sVYySIh4/785romOME3zloRX.','Lucy@gmail.com','989920043',1,'2026-01-31 12:08:39','2026-01-31 12:08:39',0);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_profile`
+--
+
+DROP TABLE IF EXISTS `user_profile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_profile` (
+  `profile_id` int NOT NULL AUTO_INCREMENT COMMENT 'Profile primary key',
+  `user_id` int DEFAULT NULL COMMENT 'FK to user.id',
+  `street` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Street address',
+  `city` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'City',
+  `state_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'State name',
+  `zipcode` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Postal code',
+  `membership_type` int DEFAULT NULL COMMENT 'Membership type',
+  `driver_license_id` int DEFAULT NULL COMMENT 'FK to driver_license.id',
+  `avatar_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Profile avatar URL',
+  `date_of_birth` date DEFAULT NULL COMMENT 'Date of birth',
+  `nationality` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Nationality',
+  `emergency_contact_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Emergency contact name',
+  `emergency_contact_phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Emergency contact phone',
+  `preferred_language` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Preferred language',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last modification time',
+  `is_deleted` tinyint DEFAULT '0' COMMENT 'Soft delete flag',
+  PRIMARY KEY (`profile_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='User profile table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_profile`
+--
+
+LOCK TABLES `user_profile` WRITE;
+/*!40000 ALTER TABLE `user_profile` DISABLE KEYS */;
+INSERT INTO `user_profile` VALUES (1,10,'123 Queen Street','Auckland','Auckland','1010',1,45,'https://example.com/avatars/user12.png','1992-08-15','New Zealand','Jane Smith','+64 21 345 678','English','2026-01-28 18:43:28','2026-01-28 18:43:28',0);
+/*!40000 ALTER TABLE `user_profile` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_role`
+--
+
+DROP TABLE IF EXISTS `user_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_role` (
+  `user_id` int NOT NULL COMMENT 'FK to user.id',
+  `role_id` int NOT NULL COMMENT 'FK to role.id',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation time',
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last modification time',
+  `is_deleted` tinyint DEFAULT '0' COMMENT 'Soft delete flag',
+  PRIMARY KEY (`user_id`,`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='User-role association table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_role`
+--
+
+LOCK TABLES `user_role` WRITE;
+/*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
+INSERT INTO `user_role` VALUES (4,1,'2026-01-25 22:56:08','2026-01-25 22:56:08',0),(6,1,'2026-01-26 03:33:30','2026-01-26 03:33:30',0);
+/*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2026-01-30 23:23:27
