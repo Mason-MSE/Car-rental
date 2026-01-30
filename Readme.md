@@ -98,5 +98,11 @@ See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/ma
 
 ### Steps
 1. Clone the repository:
-    git clone https://github.com/Mason-MSE/Car-rental.git
-    cd Car-rental
+   ```bash
+   git clone https://github.com/Mason-MSE/Car-rental.git my-car-project
+   cd my-car-project
+
+2. Create and activate virtual environment:
+    ```bash
+    python -m venv venv
+    source venv/bin/activate
