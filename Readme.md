@@ -3,7 +3,7 @@
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-green)](https://fastapi.tiangolo.com/)
 [![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-blueviolet)](https://www.sqlalchemy.org/)
-
+[![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 ## Project Description
 
@@ -89,113 +89,14 @@ All tables include create_time, modify_time, is_deleted for auditing/soft delete
 
 See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/main/database_desgin.pdf).
 
-Car Rental Project
-Installation
-Prerequisites
+## Installation
 
-Python 3.10+
+### Prerequisites
+- Python 3.10+
+- PostgreSQL (or SQLite for development)
+- Virtualenv or Poetry for dependency management
 
-PostgreSQL (or SQLite for development)
-
-Virtualenv or Poetry for dependency management
-
-Steps
-
-Clone the repository
-git clone https://github.com/Mason-MSE/Car-rental.git
-
-cd Car-rental
-
-Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate # On Windows: venv\Scripts\activate
-
-Install dependencies
-pip install -r requirements.txt
-
-Set environment variables (create .env file)
-DATABASE_URL=postgresql://user:password@localhost/dbname
-SECRET_KEY=your_jwt_secret
-
-Run database migrations
-alembic upgrade head
-
-Running the App
-
-Start the FastAPI server
-uvicorn src.main:app --reload
-
-API is available at http://127.0.0.1:8000
-
-API Documentation
-
-Swagger UI: http://127.0.0.1:8000/docs
-
-Redoc: http://127.0.0.1:8000/redoc
-
-Usage Examples
-Register a User
-
-POST /users/register
-
-Request:
-{
-"full_name": "John Doe",
-"email": "john@example.com
-",
-"password": "securepassword",
-"phone": "1234567890"
-}
-
-Login
-
-POST /users/login
-
-Returns JWT token
-
-Get Available Cars
-
-GET /cars/available
-
-Requires authentication
-
-Filterable by location/date
-
-Create Booking
-
-POST /bookings
-
-Request:
-{
-"car_id": 1,
-"start_date": "2026-02-01T00:00:00",
-"end_date": "2026-02-05T00:00:00",
-"pickup_location": "Airport",
-"drop_location": "City Center"
-}
-
-Fee calculated automatically
-
-Status set to pending
-
-Observer notifies admin
-
-Approve Booking
-
-PATCH /bookings/{id}/approve
-
-Admin only
-
-Observer notifies customer
-
-Testing
-
-Run tests with pytest:
-pytest
-
-Unit tests for services
-
-Integration tests for API endpoints
-
-RBAC checks
-
+### Steps
+1. Clone the repository:
+    git clone https://github.com/Mason-MSE/Car-rental.git
+    cd Car-rental
