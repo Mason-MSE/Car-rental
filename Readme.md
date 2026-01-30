@@ -3,7 +3,7 @@
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-green)](https://fastapi.tiangolo.com/)
 [![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-blueviolet)](https://www.sqlalchemy.org/)
-[![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
+
 
 ## Project Description
 
@@ -63,7 +63,7 @@ The system uses a layered architecture:
 - **Observer Pattern**: Implemented for notification of approval situations. For example, when a booking status changes (e.g., approved or rejected), observers (like email notifier or user dashboard updater) are triggered to inform the customer.
 - **Factory Pattern**: Used in database.py to handle database connections. A DatabaseFactory class creates engine and session instances based on environment (e.g., SQLite for testing, PostgreSQL for production).
 
-See the architecture diagram in `docs/architecture.pdf` for visual representation.
+See the architecture diagram in `https://github.com/Mason-MSE/Car-rental/blob/main/architecture.pdf` for visual representation.
 
 ## Database Design
 
@@ -87,80 +87,115 @@ The database uses PostgreSQL (or compatible) with SQLAlchemy ORM. Key tables inc
 
 All tables include create_time, modify_time, is_deleted for auditing/soft deletes.
 
-See ERD in `docs/database_design.pdf`.
+See ERD in `https://github.com/Mason-MSE/Car-rental/blob/main/database_desgin.pdf`.
 
-## Installation
+Car Rental Project
+Installation
+Prerequisites
 
-### Prerequisites
-- Python 3.10+
-- PostgreSQL (or SQLite for development)
-- Virtualenv or Poetry for dependency management
+Python 3.10+
 
-### Steps
-1. Clone the repository:
-git clone https://github.com/yourusername/car-rental-api.git
-cd car-rental-api
-text2. Create and activate virtual environment:
+PostgreSQL (or SQLite for development)
+
+Virtualenv or Poetry for dependency management
+
+Steps
+
+Clone the repository
+git clone https://github.com/Mason-MSE/Car-rental.git
+
+cd Car-rental
+
+Create and activate virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-text3. Install dependencies:
-pip install -r requirements.txt
-text(Includes fastapi, sqlalchemy, pydantic, alembic, pyjwt, passlib[bcrypt], etc.)
+source venv/bin/activate # On Windows: venv\Scripts\activate
 
-4. Set environment variables (in .env file):
+Install dependencies
+pip install -r requirements.txt
+
+Set environment variables (create .env file)
 DATABASE_URL=postgresql://user:password@localhost/dbname
 SECRET_KEY=your_jwt_secret
-text5. Run migrations:
+
+Run database migrations
 alembic upgrade head
-text## Running the App
 
-Run the FastAPI server with uvicorn:
+Running the App
+
+Start the FastAPI server
 uvicorn src.main:app --reload
-textThe API will be available at `http://127.0.0.1:8000`.
 
-### API Documentation
-Access Swagger UI for interactive API docs and testing:
-- URL: http://127.0.0.1:8000/docs
-- You can request API interfaces directly from Swagger, including authentication (OAuth2 with JWT).
+API is available at http://127.0.0.1:8000
 
-For Redoc: http://127.0.0.1:8000/redoc
+API Documentation
 
-## Usage Examples
+Swagger UI: http://127.0.0.1:8000/docs
 
-### Register a User (POST /users/register)
-```json
+Redoc: http://127.0.0.1:8000/redoc
+
+Usage Examples
+Register a User
+
+POST /users/register
+
+Request:
 {
-  "full_name": "John Doe",
-  "email": "john@example.com",
-  "password": "securepassword",
-  "phone": "1234567890"
+"full_name": "John Doe",
+"email": "john@example.com
+",
+"password": "securepassword",
+"phone": "1234567890"
 }
-Login (POST /users/login)
-Returns JWT token.
-Get Available Cars (GET /cars/available)
-Requires authentication; filtered by location/date.
-Create Booking (POST /bookings)
-JSON{
-  "car_id": 1,
-  "start_date": "2026-02-01T00:00:00",
-  "end_date": "2026-02-05T00:00:00",
-  "pickup_location": "Airport",
-  "drop_location": "City Center"
+
+Login
+
+POST /users/login
+
+Returns JWT token
+
+Get Available Cars
+
+GET /cars/available
+
+Requires authentication
+
+Filterable by location/date
+
+Create Booking
+
+POST /bookings
+
+Request:
+{
+"car_id": 1,
+"start_date": "2026-02-01T00:00:00",
+"end_date": "2026-02-05T00:00:00",
+"pickup_location": "Airport",
+"drop_location": "City Center"
 }
-Fee calculated automatically; status set to pending. Observer notifies admin.
-Approve Booking (PATCH /bookings/{id}/approve)
-Admin-only; triggers Observer to notify customer.
+
+Fee calculated automatically
+
+Status set to pending
+
+Observer notifies admin
+
+Approve Booking
+
+PATCH /bookings/{id}/approve
+
+Admin only
+
+Observer notifies customer
+
 Testing
+
 Run tests with pytest:
-textpytest
-Includes unit tests for services, integration tests for API endpoints, and RBAC checks.
-Contributing
+pytest
 
-Fork the repo.
-Create a branch: git checkout -b feature/xyz.
-Commit changes: git commit -m 'Add feature'.
-Push: git push origin feature/xyz.
-Open a Pull Request.
+Unit tests for services
 
-License
-MIT License. See LICENSE for details.
+Integration tests for API endpoints
+
+RBAC checks
+
