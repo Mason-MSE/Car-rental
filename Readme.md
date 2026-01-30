@@ -87,7 +87,9 @@ The database uses PostgreSQL (or compatible) with SQLAlchemy ORM. Key tables inc
 
 All tables include create_time, modify_time, is_deleted for auditing/soft deletes.
 
-See ERD in `https://github.com/Mason-MSE/Car-rental/blob/main/database_desgin.pdf`.
+See ERD in <iframe src="https://github.com/Mason-MSE/Car-rental/blob/main/database_desgin.pdf" width="100%" height="600px">
+This browser does not support PDFs. Please download the PDF to view it: <a href="https://github.com/Mason-MSE/Car-rental/blob/main/database_desgin.pdf">Download PDF</a>
+</iframe>.
 
 Car Rental Project
 Installation
