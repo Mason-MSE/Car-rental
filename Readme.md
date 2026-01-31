@@ -137,30 +137,28 @@ See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/ma
     For Redoc: http://127.0.0.1:8000/redoc
 ## API Documentation
 ### Register a User (POST /users/register)
-    ```
-    {
-    "full_name": "John Doe",
-    "email": "john@example.com",
-    "password": "securepassword",
-    "phone": "1234567890"
-    }
-    ```
-
+    ```bash
+        {
+            "full_name": "John Doe",
+            "email": "john@example.com",
+            "password": "securepassword",
+            "phone": "1234567890"
+        }
 ### Register a User (POST /users/register)
     Returns JWT token.
 ### Get Available Cars (GET /cars/available) 
     Requires authentication; filtered by location/date.
 ### Create Booking (POST /bookings)
    ```bash
-    {
-    "car_id": 1,
-    "start_date": "2026-02-01T00:00:00",
-    "end_date": "2026-02-05T00:00:00",
-    "pickup_location": "Airport",
-    "drop_location": "City Center"
-    }
-    Fee calculated automatically; 
-    status set to pending. Observer notifies admin.
+        {
+        "car_id": 1,
+        "start_date": "2026-02-01T00:00:00",
+        "end_date": "2026-02-05T00:00:00",
+        "pickup_location": "Airport",
+        "drop_location": "City Center"
+        }
+        Fee calculated automatically; 
+        status set to pending. Observer notifies admin.
 ### Approve Booking (PATCH /bookings/{id}/approve)
     Admin-only; 
     triggers Observer to notify customer.
