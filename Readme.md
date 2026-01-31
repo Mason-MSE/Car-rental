@@ -99,7 +99,7 @@ See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/ma
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone `https://github.com/Mason-MSE/Car-rental.git` my-car-project
+   git clone [link]https://github.com/Mason-MSE/Car-rental.git my-car-project
    cd my-car-project
 
 2. Create and activate virtual environment:
