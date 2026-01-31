@@ -99,7 +99,7 @@ See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/ma
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Mason-MSE/Car-rental.git my-car-project
+   git clone `https://github.com/Mason-MSE/Car-rental.git` my-car-project
    cd my-car-project
 
 2. Create and activate virtual environment:
@@ -129,12 +129,12 @@ See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/ma
     Run the FastAPI server with uvicorn:
     ```bash
     python ./Car-rental/app.py
-    The API will be available at http://127.0.0.1:8000.
+    The API will be available at `http://127.0.0.1:8000`.
 ## API Documentation
-    - Access Swagger UI for interactive API docs and testing:
-    URL: http://127.0.0.1:8000/docs
-    - You can request API interfaces directly from Swagger, including authentication (OAuth2 with JWT).
-    For Redoc: http://127.0.0.1:8000/redoc
+- Access Swagger UI for interactive API docs and testing:
+    URL: `http://127.0.0.1:8000/docs`
+- You can request API interfaces directly from Swagger, including authentication (OAuth2 with JWT).
+    For Redoc: `http://127.0.0.1:8000/redoc`
 ## API Documentation
 ### Register a User (POST /users/register)
     ```bash
