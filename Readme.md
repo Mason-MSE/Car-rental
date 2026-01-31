@@ -103,7 +103,7 @@ See ERD in ![Clinic Database Design](https://github.com/Mason-MSE/Car-rental/blo
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone [link]https://github.com/Mason-MSE/Car-rental.git my-car-project
+   git clone [link]https://github.com/Mason-MSE/Car-rental.git
 2. Enter the project directory::
     ```bash
     cd Car-rental
