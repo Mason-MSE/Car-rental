@@ -100,12 +100,9 @@ See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/ma
 1. Clone the repository:
    ```bash
    git clone [link]https://github.com/Mason-MSE/Car-rental.git my-car-project
-   cd my-car-project
-
-2. Create and activate virtual environment:
+2. Enter the project directory::
     ```bash
-    python -m venv venv
-    source venv/bin/activate
+    cd Car-rental
 3. Create and activate virtual environment:
     ```bash
    python -m venv venv
@@ -131,10 +128,10 @@ See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/ma
     python ./Car-rental/app.py
     The API will be available at `http://127.0.0.1:8000`.
 ## API Documentation
-- Access Swagger UI for interactive API docs and testing:
-    URL: `http://127.0.0.1:8000/docs`
-- You can request API interfaces directly from Swagger, including authentication (OAuth2 with JWT).
-    For Redoc: `http://127.0.0.1:8000/redoc`
+   - Access Swagger UI for interactive API docs and testing: 
+   - URL: `http://127.0.0.1:8000/docs`
+   - You can request API interfaces directly from Swagger, including authentication (OAuth2 with JWT).
+   - For Redoc: `http://127.0.0.1:8000/redoc`
 ## API Documentation
 ### Register a User (POST /users/register)
     ```
