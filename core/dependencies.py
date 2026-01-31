@@ -61,12 +61,12 @@ def require_permission():
             .filter(RoleResourceModel.role_id.in_(role_ids))\
             .all()
         
-        print(f"Resources for roles: {resources} res_path: {path} res_method: {method}")
+        # print(f"Resources for roles: {resources} res_path: {path} res_method: {method}")
 
         # Check if current path + method matches any resource
         for res_path, res_method in resources:
             path_regex, _, param_convertors =compile_path(res_path)
-            if res_path == path and res_method.upper() == method:
+            if path_regex.match(path) and res_method.upper() == method:
                 return current_user
 
         # Deny if no match

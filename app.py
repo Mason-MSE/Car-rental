@@ -59,7 +59,7 @@ def include_routers_from_folder(folder: str = "api"):
             router = getattr(module, "router")
             # Optional: add prefix=/api or prefix=f"/{file_path.stem}" etc.
             app.include_router(router,dependencies=[Depends(get_current_user)])   # or app.include_router(router, prefix=f"/{file_path.stem}")
-            print(f"Included router from: {file_path.name}")
+            # print(f"Included router from: {file_path.name}")
         if hasattr(module, "public_router"):
             app.include_router(module.public_router)
 
