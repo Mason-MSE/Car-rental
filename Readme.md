@@ -142,7 +142,7 @@ See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/ma
             "phone": "1234567890"
         }
     ``` 
-### Register a User (POST /users/register)
+### Login (POST /users/login)
     Returns JWT token.
 ### Get Available Cars (GET /cars/available) 
     Requires authentication; filtered by location/date.
