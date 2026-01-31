@@ -63,7 +63,7 @@ The system uses a layered architecture:
 - **Observer Pattern**: Implemented for notification of approval situations. For example, when a booking status changes (e.g., approved or rejected), observers (like email notifier or user dashboard updater) are triggered to inform the customer.
 - **Factory Pattern**: Used in database.py to handle database connections. A DatabaseFactory class creates engine and session instances based on environment (e.g., SQLite for testing, PostgreSQL for production).
 
-See the architecture diagram in ![Clinic Architecture](https://github.com/Mason-MSE/Car-rental/images/architecture.png) for visual representation.
+See the architecture diagram in ![Clinic Architecture](https://github.com/Mason-MSE/Car-rental/blob/main/images/architecture.png) for visual representation.
 
 ## Database Design
 
