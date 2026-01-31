@@ -106,3 +106,65 @@ See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/ma
     ```bash
     python -m venv venv
     source venv/bin/activate
+3. Create and activate virtual environment:
+    ```bash
+   python -m venv venv
+   source venv/bin/activate
+4. Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    (Includes fastapi, sqlalchemy, pydantic, alembic, pyjwt, passlib[bcrypt], etc.)
+5. Set environment variables (in .env file):
+   ```bash
+    # Replace with your MySQL credentials
+    DB_USER = "root"
+    DB_PASSWORD = "rootpassword"
+    DB_HOST = "127.0.0.1"
+    DB_PORT = "3306"
+    DB_NAME = "rental"
+
+    # SQLAlchemy database URL for MySQL
+    SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}?charset=utf8mb4"
+## Running the App
+    Run the FastAPI server with uvicorn:
+    ```bash
+    python ./Car-rental/app.py
+    The API will be available at http://127.0.0.1:8000.
+## API Documentation
+    - Access Swagger UI for interactive API docs and testing:
+    URL: http://127.0.0.1:8000/docs
+    - You can request API interfaces directly from Swagger, including authentication (OAuth2 with JWT).
+    For Redoc: http://127.0.0.1:8000/redoc
+## API Documentation
+### Register a User (POST /users/register)
+    ```
+    {
+    "full_name": "John Doe",
+    "email": "john@example.com",
+    "password": "securepassword",
+    "phone": "1234567890"
+    }
+    ```
+
+### Register a User (POST /users/register)
+    Returns JWT token.
+### Get Available Cars (GET /cars/available) 
+    Requires authentication; filtered by location/date.
+### Create Booking (POST /bookings)
+    ```
+    {
+    "car_id": 1,
+    "start_date": "2026-02-01T00:00:00",
+    "end_date": "2026-02-05T00:00:00",
+    "pickup_location": "Airport",
+    "drop_location": "City Center"
+    }
+    ``` 
+    Fee calculated automatically; status set to pending. Observer notifies admin.
+### Approve Booking (PATCH /bookings/{id}/approve)
+    Admin-only; triggers Observer to notify customer.
+
+## Testing
+Run tests with pytest:
+    ```bash
+    pytest

@@ -13,7 +13,7 @@ from apis.auth import auth_router
 app = FastAPI()
 
 app = FastAPI(
-    title="YB Assessment 1 API",
+    title="Car Rental System",
     description="FastAPI Swagger",
     version="1.0.0",
     docs_url="/docs",       # Swagger UI
