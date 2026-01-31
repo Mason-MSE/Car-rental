@@ -151,7 +151,7 @@ See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/ma
 ### Get Available Cars (GET /cars/available) 
     Requires authentication; filtered by location/date.
 ### Create Booking (POST /bookings)
-    ```
+   ```bash
     {
     "car_id": 1,
     "start_date": "2026-02-01T00:00:00",
@@ -159,12 +159,13 @@ See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/ma
     "pickup_location": "Airport",
     "drop_location": "City Center"
     }
-    ``` 
-    Fee calculated automatically; status set to pending. Observer notifies admin.
+    Fee calculated automatically; 
+    status set to pending. Observer notifies admin.
 ### Approve Booking (PATCH /bookings/{id}/approve)
-    Admin-only; triggers Observer to notify customer.
+    Admin-only; 
+    triggers Observer to notify customer.
 
 ## Testing
-Run tests with pytest:
+    Run tests with pytest:
     ```bash
     pytest
