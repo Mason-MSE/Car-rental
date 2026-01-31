@@ -137,20 +137,20 @@ See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/ma
     For Redoc: `http://127.0.0.1:8000/redoc`
 ## API Documentation
 ### Register a User (POST /users/register)
-    `code`
+    ```
         {
             "full_name": "John Doe",
             "email": "john@example.com",
             "password": "securepassword",
             "phone": "1234567890"
         }
-
+    ``` 
 ### Register a User (POST /users/register)
     Returns JWT token.
 ### Get Available Cars (GET /cars/available) 
     Requires authentication; filtered by location/date.
 ### Create Booking (POST /bookings)
-   `code`
+    ```
         {
         "car_id": 1,
         "start_date": "2026-02-01T00:00:00",
@@ -160,11 +160,13 @@ See ERD in [Database Design PDF](https://github.com/Mason-MSE/Car-rental/blob/ma
         }
         Fee calculated automatically; 
         status set to pending. Observer notifies admin.
+    ```
 ### Approve Booking (PATCH /bookings/{id}/approve)
     Admin-only; 
     triggers Observer to notify customer.
 
 ## Testing
     Run tests with pytest:
+    
     ```bash
     pytest
