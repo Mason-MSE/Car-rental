@@ -64,7 +64,10 @@ The system uses a layered architecture:
 - **Factory Pattern**: Used in database.py to handle database connections. A DatabaseFactory class creates engine and session instances based on environment (e.g., SQLite for testing, PostgreSQL for production).
 
 See the architecture diagram in the picture for visual representation. 
-![Clinic Architecture](https://github.com/Mason-MSE/Car-rental/blob/main/images/architecture.png) 
+![Clinic Architecture](https://github.com/Mason-MSE/Car-rental/blob/main/images/UML.png) 
+View UML diagrams here:  
+## UML Diagrams
+![Clinic Architecture](https://github.com/Mason-MSE/Car-rental/blob/main/images/architecture.png)
 
 ## Database Design
 
@@ -88,7 +91,7 @@ The database uses PostgreSQL (or compatible) with SQLAlchemy ORM. Key tables inc
 
 All tables include create_time, modify_time, is_deleted for auditing/soft deletes.
 
-See ERD in [image](../Car-rental/images/database_design.png).
+See ERD in ![Clinic Database Design](https://github.com/Mason-MSE/Car-rental/blob/main/images/database_design.png) .
 
 ## Installation
 
