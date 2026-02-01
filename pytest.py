@@ -1,7 +1,10 @@
 import argparse
+import random
 import requests
 import json
 import time
+import string
+
 
 # Configuration - change this if your backend runs on different host/port
 BASE_URL = "http://127.0.0.1:8000"
@@ -45,6 +48,23 @@ def api_get(endpoint, token=None):
     except Exception as e:
         return 0, {"error": str(e)}
 
+def random_string(length=8):
+    """Generate a random string of letters and digits."""
+    letters = string.ascii_lowercase + string.digits
+    return ''.join(random.choice(letters) for _ in range(length))
+def random_fullname():
+    """Generate a random full name."""
+    first_names = ["John", "Jane", "Alex", "Emily", "Chris", "Anna", "Michael", "Sophia"]
+    last_names = ["Smith", "Doe", "Brown", "Johnson", "Lee", "Taylor", "Wilson", "Clark"]
+    return f"{random.choice(first_names)} {random.choice(last_names)}"
+
+def random_phone():
+    """Generate a random phone number in New Zealand format."""
+    # NZ mobile numbers start with 02X or 021/022/027/029 etc.
+    prefixes = ["021", "022", "027", "029"]
+    return f"{random.choice(prefixes)}{random.randint(1000000, 9999999)}"
+
+
 def run_full_demo():
     """
     Run a complete end-to-end demo in sequence:
@@ -59,18 +79,32 @@ def run_full_demo():
     """
     print("=== Car Rental Full Flow Demo ===\n")
 
-    # ── Step 1: Register a regular user ──
-    # print("1. Register user 'john_doe'")
-    # status, resp = api_post("/user/", {
-    #     "username": "john_doe",
-    #     "password": "password123",
-    #     "email": "john@example.com"
-    # })
-    # print("   →", resp.get("message", resp))
-
-   
-
     
+
+    # Generate random username and email
+    username = f"user_{random_string(6)}"
+    email = f"{random_string(6)}@example.com"
+    password = "password123"  # Keep password fixed for testing
+    fullname = random_fullname()
+    phone = random_phone()
+
+    # Example API POST call
+    status, resp = api_post("/user/", {
+        "username": username,
+        "password": password,
+        "email": email,
+        "full_name": fullname,
+        "phone": phone
+    })
+    # ── Step 1: Register a regular user ──
+    print("1. Register user 'john_doe'")
+    status, resp = api_post("/user/", {
+        "username": "john_doe",
+        "password": "password123",
+        "email": "john@example.com"
+    })
+    print("   →", resp.get("message", resp))
+
 
     # ── Step 2: Login as regular user ──
     print("\n2. Login as john_doe")
@@ -94,44 +128,44 @@ def run_full_demo():
     user_token = data.get("access_token")
     print("   → Login OK. Token received.Token:",user_token)
 
-    # print("\n3. Create user profile")
-    # status, resp = api_post(
-    #     "/user_profile/",
-    #     data={
-    #         "address": "123 Queen Street",
-    #         "city": "Auckland",
-    #         "country": "New Zealand",
-    #         "emergency_contact_name": "Jane Doe",
-    #         "emergency_contact_phone": "021123456"
-    #     },
-    #     token=user_token
-    # )
+    print("\n3. Create user profile")
+    status, resp = api_post(
+        "/user_profile/",
+        data={
+            "address": "123 Queen Street",
+            "city": "Auckland",
+            "country": "New Zealand",
+            "emergency_contact_name": "Jane Doe",
+            "emergency_contact_phone": "021123456"
+        },
+        token=user_token
+    )
 
-    # if status != 200:
-    #     print("   Create profile failed!", resp)
-    #     return
+    if status != 200:
+        print("   Create profile failed!", resp)
+        return
 
-    # print("   → User profile created")
+    print("   → User profile created")
 
 
 
-    # print("\n4. Create driver license")
+    print("\n4. Create driver license")
 
-    # status, resp = api_post(
-    #     "/driver_license/",
-    #     data={
-    #         "license_number": "NZDL1234567",
-    #         "license_pic": "mock_license.jpg",
-    #         "expire_date": "2030-12-31"
-    #     },
-    #     token=user_token
-    # )
+    status, resp = api_post(
+        "/driver_license/",
+        data={
+            "license_number": "NZDL1234567",
+            "license_pic": "mock_license.jpg",
+            "expire_date": "2030-12-31"
+        },
+        token=user_token
+    )
 
-    # if status != 200:
-    #     print("   Create driver license failed!", resp)
-    #     return
+    if status != 200:
+        print("   Create driver license failed!", resp)
+        return
 
-    # print("   → Driver license created")
+    print("   → Driver license created")
 
     # ── Step 3: List available cars ──
     print("\n3. List available cars")
