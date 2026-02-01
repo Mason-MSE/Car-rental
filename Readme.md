@@ -452,8 +452,11 @@ See ERD in ![Clinic Database Design](https://github.com/Mason-MSE/Car-rental/blo
     # SQLAlchemy database URL for MySQL
     SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}?charset=utf8mb4"
 
+    execute a script for rental_init.db
+
     administrator: admin@gmail.com/12345
     customer: Jenny@gmail.com/12345
+    
 ## Running the App
     Run the FastAPI server with uvicorn:
     ```bash
