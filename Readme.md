@@ -75,58 +75,50 @@ This architecture follows a **clean, layered design** for a web application back
 ## 2. Architectural Layers & Responsibilities
 
 ### **A. Presentation Layer**
-    Routers/Endpoints
-    - **Purpose**: Handles HTTP requests/responses, routing, and input validation.
+- **Purpose**: Handles HTTP requests/responses, routing, and input validation.
 - **Design Reason**:
   - Thin layer focusing only on API contract and protocol handling.
   - Delegates business logic to services, keeping controllers lean.
   - Enables easy swapping of protocols (REST, GraphQL) without affecting core logic.
 
 ### **B. Application Layer**
-    Application Services Calls
-    - **Purpose**: Orchestrates use cases, coordinates domain objects, and handles transactions.
+- **Purpose**: Orchestrates use cases, coordinates domain objects, and handles transactions.
 - **Design Reason**:
   - Contains **application-specific business logic** (workflows, validations).
   - Acts as mediator between presentation and domain layers.
   - Ensures single responsibility per service (e.g., `BookingService`, `UserService`).
 
 ### **C. Domain Layer**
-    Domains (Interface)
-    Authorization RBAC
-    (Check logic and Authority)
-    - **Purpose**: Contains **core business logic**, entities, rules, and authorization.
+ - **Purpose**: Contains **core business logic**, entities, rules, and authorization.
 - **Design Reason**:
   - **Domain-driven design**: Models real-world business concepts and rules.
   - **Authorization centralization**: RBAC logic is encapsulated here, ensuring consistent policy enforcement.
   - **Framework-agnostic**: Pure business logic without infrastructure dependencies.
 
 ### **D. Data Access Layer**
-    SQLAlchemy Models (DB tables)
-    - **Purpose**: Maps database tables to Python objects using ORM.
+    
+- **Purpose**: Maps database tables to Python objects using ORM.
 - **Design Reason**:
   - **ORM abstraction**: SQLAlchemy provides database-agnostic operations.
   - **Schema definition**: Centralizes table structures and relationships.
   - **Data integrity**: Enforces constraints at application level.
 
 ### **E. Infrastructure Layer**
-    Infrastructure (database.py, security.py)
-    - **Purpose**: Provides technical capabilities (database connections, encryption, logging).
+- **Purpose**: Provides technical capabilities (database connections, encryption, logging).
 - **Design Reason**:
   - **Dependency inversion**: Concrete implementations of interfaces defined in domain layer.
   - **External service integration**: Handles third-party APIs, email, file storage.
   - **Configuration management**: Centralizes environment-specific settings.
 
 ### **F. Data Transfer & Validation Layer**
-    Entities (Pydantic schemas)
-    - **Purpose**: Defines data structures for input/output validation and serialization.
+- **Purpose**: Defines data structures for input/output validation and serialization.
 - **Design Reason**:
   - **Type safety**: Pydantic schemas ensure data integrity across layer boundaries.
   - **Documentation**: Schemas serve as implicit API documentation.
   - **Separation of concerns**: Different schemas for request, response, and internal use.
 
 ### **G. Authorization Foundation**
-    RBAC models/Role/Resource/perm
-    - **Purpose**: Defines the data model for Role-Based Access Control.
+- **Purpose**: Defines the data model for Role-Based Access Control.
 - **Design Reason**:
   - **Reusable policy framework**: Centralized permission management.
   - **Flexible authorization**: Supports complex permission hierarchies.
@@ -137,8 +129,7 @@ This architecture follows a **clean, layered design** for a web application back
 ## 3. Key Architectural Patterns
 
 ### **Dependency Direction**
-    Presentation → Application → Domain ← Infrastructure
-    - **Dependency rule**: Inner layers (Domain) have no knowledge of outer layers.
+- **Dependency rule**: Inner layers (Domain) have no knowledge of outer layers.
 - **Benefit**: Domain logic remains pure and testable without framework dependencies.
 
 ### **Interface Segregation**
@@ -233,7 +224,7 @@ This UML diagram represents a **comprehensive car rental business workflow** wit
 
 ### **A. Multi-Role User Management**
     Visitor → Registered User → Admin (hierarchical escalation)
-    - **Design Reason**: Progressive engagement model
+ - **Design Reason**: Progressive engagement model
   - **Visitors**: Casual browsers with limited access
   - **Registered Users**: Verified customers with booking capabilities
   - **Admins**: Full system control with RBAC protection
