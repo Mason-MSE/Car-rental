@@ -44,7 +44,7 @@ def create_item(item_in: BookingCreateSchema, db: Session = Depends(get_db),curr
 
 @router.put('/{booking_id}', response_model=BookingSchema)
 def update_item(booking_id, item_in: BookingUpdateSchema, db: Session = Depends(get_db),current_user: UserModel = Depends(get_current_user)):
-    return boooking_service.update_item(booking_id,item_in,db,current_user)
+    return boooking_service.update_item(booking_id,item_in,db)
 
 @router.delete('/{booking_id}')
 def delete_item(booking_id, db: Session = Depends(get_db)):
