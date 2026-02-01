@@ -59,271 +59,248 @@ The system uses a layered architecture:
 - **Infrastructure Layer**: SQLAlchemy models, database connections, security (JWT, RBAC).
 
 ### Design Patterns
+
 - **Observer Pattern**: Implemented for notification of approval situations. For example, when a booking status changes (e.g., approved or rejected), observers (like email notifier or user dashboard updater) are triggered to inform the customer.
 - **Factory Pattern**: Used in database.py to handle database connections. A DatabaseFactory class creates engine and session instances based on environment (e.g., SQLite for testing, PostgreSQL for production).
 
-See the architecture diagram in the picture for visual representation. 
-View UML diagrams here: 
-![Clinic Architecture](https://github.com/Mason-MSE/Car-rental/blob/main/images/architecture.png) 
-# Architecture Design Rationale
+See the architecture diagram in the picture for visual representation.  
 
-## 1. Overview
+View UML diagrams here:  
+![Clinic Architecture](https://github.com/Mason-MSE/Car-rental/blob/main/images/architecture.png)
+
+### Architecture Design Rationale
+
+#### 1. Overview
+
 This architecture follows a **clean, layered design** for a web application backend (likely using Python/FastAPI). It separates concerns into distinct layers, promoting maintainability, testability, and scalability.
 
----
+#### 2. Architectural Layers & Responsibilities
 
-## 2. Architectural Layers & Responsibilities
-
-### **A. Presentation Layer**
+##### A. Presentation Layer
 - **Purpose**: Handles HTTP requests/responses, routing, and input validation.
 - **Design Reason**:
   - Thin layer focusing only on API contract and protocol handling.
   - Delegates business logic to services, keeping controllers lean.
   - Enables easy swapping of protocols (REST, GraphQL) without affecting core logic.
 
-### **B. Application Layer**
+##### B. Application Layer
 - **Purpose**: Orchestrates use cases, coordinates domain objects, and handles transactions.
 - **Design Reason**:
   - Contains **application-specific business logic** (workflows, validations).
   - Acts as mediator between presentation and domain layers.
   - Ensures single responsibility per service (e.g., `BookingService`, `UserService`).
 
-### **C. Domain Layer**
- - **Purpose**: Contains **core business logic**, entities, rules, and authorization.
+##### C. Domain Layer
+- **Purpose**: Contains **core business logic**, entities, rules, and authorization.
 - **Design Reason**:
   - **Domain-driven design**: Models real-world business concepts and rules.
   - **Authorization centralization**: RBAC logic is encapsulated here, ensuring consistent policy enforcement.
   - **Framework-agnostic**: Pure business logic without infrastructure dependencies.
 
-### **D. Data Access Layer**
-    
+##### D. Data Access Layer
 - **Purpose**: Maps database tables to Python objects using ORM.
 - **Design Reason**:
   - **ORM abstraction**: SQLAlchemy provides database-agnostic operations.
   - **Schema definition**: Centralizes table structures and relationships.
   - **Data integrity**: Enforces constraints at application level.
 
-### **E. Infrastructure Layer**
+##### E. Infrastructure Layer
 - **Purpose**: Provides technical capabilities (database connections, encryption, logging).
 - **Design Reason**:
   - **Dependency inversion**: Concrete implementations of interfaces defined in domain layer.
   - **External service integration**: Handles third-party APIs, email, file storage.
   - **Configuration management**: Centralizes environment-specific settings.
 
-### **F. Data Transfer & Validation Layer**
+##### F. Data Transfer & Validation Layer
 - **Purpose**: Defines data structures for input/output validation and serialization.
 - **Design Reason**:
   - **Type safety**: Pydantic schemas ensure data integrity across layer boundaries.
   - **Documentation**: Schemas serve as implicit API documentation.
   - **Separation of concerns**: Different schemas for request, response, and internal use.
 
-### **G. Authorization Foundation**
+##### G. Authorization Foundation
 - **Purpose**: Defines the data model for Role-Based Access Control.
 - **Design Reason**:
   - **Reusable policy framework**: Centralized permission management.
   - **Flexible authorization**: Supports complex permission hierarchies.
   - **Auditability**: Clear mapping of roles to resources and permissions.
 
----
+#### 3. Key Architectural Patterns
 
-## 3. Key Architectural Patterns
-
-### **Dependency Direction**
+##### Dependency Direction
 - **Dependency rule**: Inner layers (Domain) have no knowledge of outer layers.
 - **Benefit**: Domain logic remains pure and testable without framework dependencies.
 
-### **Interface Segregation**
+##### Interface Segregation
 - Domain defines **interfaces** (abstract classes).
 - Infrastructure provides **concrete implementations**.
 - Enables easy mocking for testing and swapping implementations.
 
-### **Separation of Concerns**
+##### Separation of Concerns
 - **Business logic** → Domain layer
 - **Use case orchestration** → Application services
 - **Data persistence** → SQLAlchemy models
 - **Protocol handling** → Routers/Endpoints
 
----
+#### 4. Data Flow Example
 
-## 4. Data Flow Example
-  1. HTTP Request → Router (validates input via Pydantic)
+1. HTTP Request → Router (validates input via Pydantic)  
+2. Router → Application Service (orchestrates use case)  
+3. Application Service → Domain (business logic + RBAC check)  
+4. Domain → Infrastructure (via interfaces) for DB operations  
+5. SQLAlchemy Models ←→ Database  
+6. Response flows back through layers with proper serialization  
 
-  2. Router → Application Service (orchestrates use case)
+#### 5. Benefits of This Design
 
-  3. Application Service → Domain (business logic + RBAC check)
-
-  4. Domain → Infrastructure (via interfaces) for DB operations
-
-  5. SQLAlchemy Models ←→ Database
-
-  6. Response flows back through layers with proper serialization 
-
-
----
-
-## 5. Benefits of This Design
-
-### **Testability**
+##### Testability
 - Domain logic can be tested without web framework or database.
 - Mock implementations can be injected via interfaces.
 
-### **Maintainability**
+##### Maintainability
 - Clear boundaries make code easier to understand and modify.
 - Changes in one layer (e.g., database) don't cascade through system.
 
-### **Scalability**
+##### Scalability
 - Layers can be deployed independently (microservices-ready).
 - Horizontal scaling possible at presentation or application layers.
 
-### **Security**
+##### Security
 - RBAC centralized in domain layer ensures consistent enforcement.
 - Input validation at multiple layers (Pydantic + domain validation).
 
----
+#### 6. Technology Stack Inference
+- **Web Framework**: FastAPI or Flask (Pydantic integration)  
+- **ORM**: SQLAlchemy  
+- **Authentication**: Likely JWT/OAuth2 integrated in security.py  
+- **Structure**: Modular Python application with clear separation  
 
-## 6. Technology Stack Inference
+#### 7. Potential Improvements
+1. **CQRS Pattern**: Separate commands and queries for complex systems.  
+2. **Event-driven architecture**: Add domain events for better decoupling.  
+3. **Caching layer**: Between application and infrastructure for performance.  
+4. **API versioning**: At router level for backward compatibility.  
 
-- **Web Framework**: FastAPI or Flask (Pydantic integration)
-- **ORM**: SQLAlchemy
-- **Authentication**: Likely JWT/OAuth2 integrated in security.py
-- **Structure**: Modular Python application with clear separation
+#### 8. Summary
+This architecture successfully implements **clean architecture principles** with **domain-driven design**. It balances separation of concerns with practical development needs, creating a system that is:  
+- **Business-focused** (domain layer centrality)  
+- **Technically robust** (layered abstraction)  
+- **Flexible** (interface-based dependencies)  
+- **Secure** (centralized RBAC)  
+- **Maintainable** (clear boundaries and responsibilities)  
 
----
+### UML Analysis & Design Rationale
 
-## 7. Potential Improvements
-
-1. **CQRS Pattern**: Separate commands and queries for complex systems.
-2. **Event-driven architecture**: Add domain events for better decoupling.
-3. **Caching layer**: Between application and infrastructure for performance.
-4. **API versioning**: At router level for backward compatibility.
-
----
-
-## 8. Summary
-This architecture successfully implements **clean architecture principles** with **domain-driven design**. It balances separation of concerns with practical development needs, creating a system that is:
-- **Business-focused** (domain layer centrality)
-- **Technically robust** (layered abstraction)
-- **Flexible** (interface-based dependencies)
-- **Secure** (centralized RBAC)
-- **Maintainable** (clear boundaries and responsibilities)   
-
-Here's a comprehensive analysis of the architecture design in markdown format, explaining the rationale behind this layered approach:
-
-
-
-## UML Diagrams
-![Clinic Architecture](https://github.com/Mason-MSE/Car-rental/blob/main/images/UML.png) 
-# Car Rental System UML Analysis & Design Rationale
-
-## 1. Overview
+#### 1. Overview
 This UML diagram represents a **comprehensive car rental business workflow** with **multi-role interaction** (Customer, Registered User, Admin). It captures the end-to-end process from user registration to car return, incorporating both customer-facing and administrative operations.
 
----
+#### 2. Key System Components & Design Principles
 
-## 2. Key System Components & Design Principles
+##### A. Multi-Role User Management
+Visitor → Registered User → Admin (hierarchical escalation)  
 
-### **A. Multi-Role User Management**
-    Visitor → Registered User → Admin (hierarchical escalation)
- - **Design Reason**: Progressive engagement model
+- **Design Reason**: Progressive engagement model
   - **Visitors**: Casual browsers with limited access
   - **Registered Users**: Verified customers with booking capabilities
   - **Admins**: Full system control with RBAC protection
- - **Registration Gateway**: Driver license upload ensures compliance and trust
-  User Role → Admin Dashboard → Role-Base Access Control
+- **Registration Gateway**: Driver license upload ensures compliance and trust  
+
+User Role → Admin Dashboard → Role-Base Access Control  
+
 - **Design Reason**: Security and operational separation
   - **Least privilege principle**: Users only see relevant functions
   - **Admin capabilities**: Car management, booking approval, system configuration
   - **Scalable permissions**: RBAC supports future role additions (e.g., Fleet Manager)
 
-### **C. Car Management Lifecycle**
-    Add car → Edit/Delete → Mark Unavailable → View Available
+##### C. Car Management Lifecycle
+Add car → Edit/Delete → Mark Unavailable → View Available  
+
 - **Design Reason**: Complete asset management
   - **Centralized catalog**: Single source of truth for car inventory
   - **Availability tracking**: Real-time status prevents double-booking
   - **Business rules enforcement**: Minimum/maximum rental days controlled
 
-### **D. Booking Workflow Engine**
-Create booking → Pending approval → Admin action → Customer notification
+##### D. Booking Workflow Engine
+Create booking → Pending approval → Admin action → Customer notification  
+
 - **Design Reason**: Controlled transaction flow
   - **Approval gateway**: Prevents fraud and ensures resource availability
   - **Status transparency**: Customers receive clear notifications
   - **Exception handling**: Rejection with explanation maintains customer trust
 
-### **E. Smart Rental Execution**
-Pick up → Real-time tracking → Return → Condition check
+##### E. Smart Rental Execution
+Pick up → Real-time tracking → Return → Condition check  
+
 - **Design Reason**: Modern rental experience
   - **Bluetooth integration**: Keyless entry and authentication
   - **Location services**: Theft prevention and fleet optimization
   - **Condition monitoring**: Damage assessment automation
 
-### **F. Financial & Compliance Logic**
-Calculate fees → Late detection → Extra charges → Payment processing
+##### F. Financial & Compliance Logic
+Calculate fees → Late detection → Extra charges → Payment processing  
+
 - **Design Reason**: Automated revenue protection
   - **Dynamic pricing**: Base rate + insurance + taxes + penalties
   - **Late fee automation**: Eliminates manual tracking
   - **Audit trail**: Clear fee calculation and application
 
----
+#### 3. Workflow Analysis
 
-## 3. Workflow Analysis
+##### Customer Journey
+1. Registration/Login → 2. Car Search → 3. Booking Request →  
+2. Approval Wait → 5. Pickup → 6. Usage → 7. Return → 8. Payment  
 
-### **Customer Journey**
-1. Registration/Login → 2. Car Search → 3. Booking Request →
-
-2. Approval Wait → 5. Pickup → 6. Usage → 7. Return → 8. Payment
 - **Seamless experience**: Linear progression with clear milestones
 - **Reduced friction**: Minimal steps for returning customers
 
-### **Admin Operations**
-1. Dashboard → 2. Car Management → 3. Booking Oversight →
+##### Admin Operations
+1. Dashboard → 2. Car Management → 3. Booking Oversight →  
+2. Financial Monitoring → 5. System Configuration  
 
-2. Financial Monitoring → 5. System Configuration
 - **Centralized control**: All critical functions in one interface
 - **Proactive management**: Real-time visibility into operations
 
----
+#### 4. Business Logic Integration
 
-## 4. Business Logic Integration
-
-### **Insurance Integration**
-Select car → View insurance options → Include in booking → Calculate premium
+##### Insurance Integration
+Select car → View insurance options → Include in booking → Calculate premium  
 
 - **Design Reason**: Regulatory compliance and risk management
   - **Mandatory coverage**: Ensures legal requirements met
   - **Optional upgrades**: Revenue opportunity via premium insurance
 
-### **Real-time Services**
-Bluetooth unlock + GPS tracking + Condition monitoring
+##### Real-time Services
+Bluetooth unlock + GPS tracking + Condition monitoring  
+
 - **Design Reason**: Competitive differentiation
   - **Contactless experience**: Post-pandemic preference
   - **Asset protection**: Proactive theft and damage prevention
   - **Data collection**: Usage patterns for business optimization
 
-### **Notification System**
-Approval/Rejection notices → Reminders → Return confirmations
+##### Notification System
+Approval/Rejection notices → Reminders → Return confirmations  
+
 - **Design Reason**: Customer communication automation
   - **Reduced staff workload**: Automated messaging
   - **Improved experience**: Timely, relevant communication
 
----
+#### 5. Exception Handling Design
 
-## 5. Exception Handling Design
+##### Late Returns
+Return check → Delay detection → Fee calculation → Payment requirement  
 
-### **Late Returns**
-Return check → Delay detection → Fee calculation → Payment requirement
 - **Automated enforcement**: Eliminates manual follow-up
 - **Transparent policies**: Clear fee structure communicated upfront
 
-### **Booking Rejections**
-Admin review → Reject reason → Customer notification → Alternative suggestions
+##### Booking Rejections
+Admin review → Reject reason → Customer notification → Alternative suggestions  
+
 - **Graceful denial**: Maintains customer relationship despite rejection
 - **Learning opportunity**: Feedback for future approval improvement
 
----
+#### 6. Technology Implications
 
-## 6. Technology Implications
-
-### **Required Systems**
+##### Required Systems
 1. **Mobile App/Web Portal**: Customer interface
 2. **Admin Dashboard**: Management interface
 3. **Bluetooth Integration**: Vehicle access system
@@ -332,49 +309,43 @@ Admin review → Reject reason → Customer notification → Alternative suggest
 6. **Notification Engine**: Email/SMS/push system
 7. **Document Verification**: Driver license validation
 
-### **Integration Points**
+##### Integration Points
 - **Mapping APIs**: Location services for car discovery
 - **Payment Processors**: Secure transaction handling
 - **Identity Verification**: Third-party license validation
 - **Communication APIs**: SMS/email notification delivery
 
----
+#### 7. Business Benefits
 
-## 7. Business Benefits
-
-### **Operational Efficiency**
+##### Operational Efficiency
 - **Automated workflows**: Reduces manual intervention
 - **Real-time visibility**: Improves decision making
 - **Scalable processes**: Handles volume increases without additional staff
 
-### **Customer Experience**
+##### Customer Experience
 - **Streamlined booking**: Minimal steps for repeat customers
 - **Modern features**: Bluetooth, real-time tracking
 - **Transparent communication**: Clear status updates and fee explanations
 
-### **Risk Management**
+##### Risk Management
 - **Verification gateways**: Driver license validation
 - **Approval controls**: Prevents fraudulent bookings
 - **Asset protection**: GPS and condition monitoring
 
----
+#### 8. Potential Enhancements
 
-## 8. Potential Enhancements
-
-### **Short-term Improvements**
+##### Short-term Improvements
 1. **Loyalty Program Integration**: Points system for frequent renters
 2. **AI Recommendation Engine**: Suggest cars based on user history
 3. **Dynamic Pricing**: Demand-based rate adjustments
 
-### **Long-term Evolution**
+##### Long-term Evolution
 1. **IoT Integration**: Real-time vehicle diagnostics
 2. **Blockchain Contracts**: Smart contracts for rental agreements
 3. **Predictive Maintenance**: AI-driven service scheduling
 4. **Autonomous Vehicle Integration**: Future-proof for driverless cars
 
----
-
-## 9. Summary
+#### 9. Summary
 This UML design successfully models a **modern, scalable car rental system** that:
 
 1. **Balances automation with control**: Automated workflows with human oversight points
@@ -383,84 +354,69 @@ This UML design successfully models a **modern, scalable car rental system** tha
 4. **Ensures compliance and security**: License verification, RBAC, approval workflows
 5. **Optimizes business operations**: Efficient resource utilization and revenue protection
 
-The system is designed for **growth and adaptation**, with clear extension points for new features while maintaining robust core functionality for daily operations.
+### Database Design
 
-### **B. Role-Based Access Control (RBAC) Implementation**
-## Database Design
+#### Database Design Rationale
 
-Here is a comprehensive analysis of the database design in markdown format, explaining the rationale behind its structure.
-
-# Database Design Rationale
-
-## 1. Overview
+##### 1. Overview
 This database is designed for a **car rental management system**. It follows a **modular, relational structure** with clear separation of concerns, supporting core business processes such as user management, vehicle inventory, booking, payment, and insurance handling.
 
----
+##### 2. Core Design Principles
 
-## 2. Core Design Principles
-
-### A. Normalization
+###### A. Normalization
 The design adheres to **3NF (Third Normal Form)** to minimize redundancy and ensure data integrity:
 - Each entity (user, car, booking, payment, etc.) is stored in its own table.
 - Foreign keys are used to establish relationships instead of duplicating data.
 
-### B. Scalability & Maintainability
+###### B. Scalability & Maintainability
 - **Soft delete pattern**: Each table includes `is_deleted`, `create_time`, and `modify_time` for auditability and non-destructive deletions.
 - **Enum/status fields**: Used for `payment_status`, `booking.status`, etc., allowing easy extension of state logic.
 - **Decoupled relationships**: Many-to-many relationships are avoided in core tables; instead, linking tables (e.g., `insurance` linking `user` and `booking`) are used.
 
-### C. Localization & Compliance
+###### C. Localization & Compliance
 - Tables like `user` include `preferred_language`, `nationality`, and address fields (`state_name`, `zipcode`) to support international users.
-- `driver_license` stores license images and verification status for regulatory compliance.
+- `driver_license` stores license images and verification status for regulatory compliance
 
----
+##### 3. Table Group Analysis
 
-## 3. Table Group Analysis
-
-### **User & Authentication Group**
+###### User & Authentication Group
 - **`user`**: Central table for user profiles, with `driver_license_id` linking to a separate license table for modularity.
 - **`driver_license`**: Isolated storage of sensitive license data, supporting verification workflows.
 - **`role` & `resource`**: Support RBAC (Role-Based Access Control) for admin/backend systems.
 
-### **Booking & Rental Group**
+###### Booking & Rental Group
 - **`booking`**: Core transaction table linking `user_id`, `car_id`, and `insurance_id`.
 - **`car`**: Vehicle details with availability flag, rental rules (`min/max_rent_days`), and `daily_rate`.
 - **`location`**: Reusable address model for pickup/drop-off locations and car storage.
 
-### **Financial & Insurance Group**
+###### Financial & Insurance Group
 - **`rent_fee`**: Breakdown of rental costs (base, insurance, tax, discounts), linked to `booking_id`.
 - **`payment`**: Tracks actual transactions, linked to `rent_fee_id` and `booking_id`.
 - **`insurance`**: Stores policy details per booking, with `insurance_price_id` and `insurance_type` for flexibility.
 - **`insurance_category`**: Lookup table for insurance types, promoting reuse.
 
-### **Vehicle Classification Group**
+###### Vehicle Classification Group
 - **`car_category`**: Categorizes cars (e.g., SUV, Compact) for filtering and pricing.
 - **`insurance_category`**: Similar classification for insurance products.
 
----
-
-## 4. Key Relationships & Business Logic
-
+##### 4. Key Relationships & Business Logic
 - **User → Driver License**: One-to-one (one user, one license record).
 - **User → Booking**: One-to-many (a user can have multiple bookings).
 - **Car → Booking**: One-to-many (a car can be booked multiple times).
 - **Booking → Rent Fee → Payment**: One-to-one-to-many (a booking has one fee record, which may have multiple payments).
 - **Insurance → Booking & User**: Insurance is tied to a specific booking and user.
 
----
+##### 5. Improvements & Considerations
 
-## 5. Improvements & Considerations
-
-### Strengths
+###### Strengths
 - **Audit-ready**: Every table has timestamp and soft delete.
 - **Flexible pricing**: `rent_fee` supports discounts, taxes, and late fees.
 - **Localization-ready**: Address and language fields support global operations.
----
 
-## 6. Summary
+##### 6. Summary
 This design is **robust, scalable, and business-ready**. It supports multi-tenancy, compliance, financial tracking, and customer management. The modular approach allows independent updates to user, vehicle, or financial modules without system-wide impact.
 
-See ERD in ![Clinic Database Design](https://github.com/Mason-MSE/Car-rental/blob/main/images/database_design.png) .
+See ERD in ![Clinic Database Design](https://github.com/Mason-MSE/Car-rental/blob/main/images/database_design.png)
 
 ## Installation
 
